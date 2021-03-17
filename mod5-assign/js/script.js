@@ -15,11 +15,11 @@ var dc = {};
 
 var homeHtmlUrl = "snippets/home-snippet.html";
 var allCategoriesUrl =
-  "json/categories.json";
+  "https://davids-restaurant.herokuapp.com/categories.json";
 var categoriesTitleHtml = "snippets/categories-title-snippet.html";
 var categoryHtml = "snippets/category-snippet.html";
 var menuItemsUrl =
-  "json/menu_items.json?category=";
+  "https://davids-restaurant.herokuapp.com/menu_items.json?category=";
 var menuItemsTitleHtml = "snippets/menu-items-title.html";
 var menuItemHtml = "snippets/menu-item.html";
 
@@ -98,16 +98,15 @@ function buildAndShowHomeHTML (categories) {
   $ajaxUtils.sendGetRequest(
     homeHtmlUrl,
     function (homeHtml) {
-      var category = chooseRandomCategory(categories);
-      var chosenCategoryShortName = category["short_name"].toString();
-      console.log(chosenCategoryShortName);
+
 
       // TODO: STEP 2: Here, call chooseRandomCategory, passing it retrieved 'categories'
       // Pay attention to what type of data that function returns vs what the chosenCategoryShortName
       // variable's name implies it expects.
       // var chosenCategoryShortName = ....
-      var chosenCategoryShortName = chosenCategoryShortName
-      var html = insertProperty(homeHtml, "randomCategoryShortName", chosenCategoryShortName);
+      var category = chooseRandomCategory(categories);
+      var chosenCategoryShortName = "'"+category.short_name+"'";
+      console.log(chosenCategoryShortName);
 
 
       // TODO: STEP 3: Substitute {{randomCategoryShortName}} in the home html snippet with the
@@ -122,13 +121,18 @@ function buildAndShowHomeHTML (categories) {
       // it into the home html snippet.
       //
       // var homeHtmlToInsertIntoMainPage = ....
+      if(chosenCategoryShortName != "undefined"){      
+        var html = insertProperty(homeHtml, "randomCategoryShortName", chosenCategoryShortName);
+        console.log(html);
 
 
       // TODO: STEP 4: Insert the the produced HTML in STEP 3 into the main page
       // Use the existing insertHtml function for that purpose. Look through this code for an example
       // of how to do that.
       // ....
-      insertHtml("#main-content", html);
+        insertHtml("#main-content", html);
+      }
+
 
     },
     false); // False here because we are getting just regular HTML from the server, so no need to process JSON.
@@ -251,7 +255,6 @@ function buildAndShowMenuItemsHTML (categoryMenuItems) {
 function buildMenuItemsViewHtml(categoryMenuItems,
                                 menuItemsTitleHtml,
                                 menuItemHtml) {
-
   menuItemsTitleHtml =
     insertProperty(menuItemsTitleHtml,
                    "name",
