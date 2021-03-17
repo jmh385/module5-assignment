@@ -99,14 +99,14 @@ function buildAndShowHomeHTML (categories) {
     homeHtmlUrl,
     function (homeHtml) {
       var category = chooseRandomCategory(categories);
-      var chosenCategoryShortName = category["short_name"];
+      var chosenCategoryShortName = category["short_name"].toString();
       console.log(chosenCategoryShortName);
 
       // TODO: STEP 2: Here, call chooseRandomCategory, passing it retrieved 'categories'
       // Pay attention to what type of data that function returns vs what the chosenCategoryShortName
       // variable's name implies it expects.
       // var chosenCategoryShortName = ....
-      var chosenCategoryShortName = string(chosenCategoryShortName)
+      var chosenCategoryShortName = chosenCategoryShortName
       var html = insertProperty(homeHtml, "randomCategoryShortName", chosenCategoryShortName);
 
 
